@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "birt.reportsPath",
+      "type": "java.lang.String",
+      "description": "Description for birt.reportsPath."
+    },
+    {
+      "name": "birt.defaultTemplate",
+      "type": "java.lang.String",
+      "description": "Description for birt.defaultTemplate."
+    },
+    {
+      "name": "report.datasource.url",
+      "type": "java.lang.String",
+      "description": "Description for report.datasource.url."
+    },
+    {
+      "name": "report.datasource.username",
+      "type": "java.lang.String",
+      "description": "Description for report.datasource.username."
+    },
+    {
+      "name": "report.datasource.password",
+      "type": "java.lang.String",
+      "description": "Description for report.datasource.password."
+    }
+  ] }

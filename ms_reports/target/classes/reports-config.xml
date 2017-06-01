@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:report.properties"/>
+
+    <bean id="reportDatasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${report.datasource.driver-class-name}"/>
+        <property name="url" value="${report.datasource.url}"/>
+        <property name="username" value="${report.datasource.username}"/>
+        <property name="password" value="${report.datasource.password}"/>
+    </bean>
+
+    <bean id="reportService" class="com.bbva.reports.engine.ReportEngine">
+        <constructor-arg ref="chainProcessor"/>
+        <constructor-arg ref="templateEngine"/>
+        <constructor-arg ref="viewFactory"/>
+        <constructor-arg ref="reportCollection"/>
+    </bean>
+
+    <!-- Template Engine -->
+    <bean id="templateEngine" class="com.bbva.reports.engine.template.MustacheEngine"/>
+
+    <!--Procesor-->
+    <bean id="chainProcessor" class="com.bbva.reports.engine.processor.ChainProcessor">
+        <constructor-arg>
+            <list>
+                <ref bean="sqlProcessor"/>
+                <ref bean="jsonProcessor"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="sqlProcessor" class="com.bbva.reports.engine.processor.SpringSQLProcessor">
+        <constructor-arg ref="reportDatasource"/>
+    </bean>
+
+    <bean id="jsonProcessor" class="com.bbva.reports.engine.processor.JSONProcessor"/>
+</beans>
