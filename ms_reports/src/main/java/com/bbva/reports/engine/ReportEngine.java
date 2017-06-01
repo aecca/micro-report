@@ -5,7 +5,7 @@ import com.bbva.reports.engine.model.Report;
 import com.bbva.reports.engine.model.ReportCollection;
 import com.bbva.reports.engine.model.ReportSource;
 import com.bbva.reports.engine.model.ReportSourceParam;
-import com.bbva.reports.engine.processor.IProcessor;
+import com.bbva.reports.engine.datasource.IDataSource;
 import com.bbva.reports.engine.template.ITemplateEngine;
 import com.bbva.reports.engine.visualizer.birt.BirtView;
 import com.bbva.reports.engine.visualizer.birt.BirtViewFactory;
@@ -16,16 +16,16 @@ import java.util.Map;
 
 public class ReportEngine {
 
-    private IProcessor processor;
+    private IDataSource processor;
     private ITemplateEngine template;
     private ReportCollection reportCollection;
     private BirtViewFactory birtViewFactory;
 
     public ReportEngine(
-            IProcessor processor,
+            IDataSource processor,
             ITemplateEngine templateEngine,
-            BirtViewFactory birtViewFactory,
-            ReportCollection reportCollection) {
+            ReportCollection reportCollection,
+            BirtViewFactory birtViewFactory) {
         this.processor = processor;
         this.template = templateEngine;
         this.reportCollection = reportCollection;
@@ -43,13 +43,6 @@ public class ReportEngine {
         }
 
         List<ReportSource> sources = report.sources();
-
-        if (sources.size() == 0) {
-            // En este punto, la plantilla no tiene fuente de datos para alimentarse
-            // Se puede generar plantillas estaticas o en este caso lanzar
-            // la exepcion ya que aun no esta definido el flujo
-            throw new IllegalArgumentException("Se necesita tener al menos una fuente de datos");
-        }
 
         BirtView birtView = birtViewFactory.createBirtView();
 

@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
-import org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -17,8 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 })
 @EntityScan("com.bbva.reports.engine.model")
 @EnableAutoConfiguration(exclude = {
-        MongoAutoConfiguration.class,
-        MustacheAutoConfiguration.class
+        MongoAutoConfiguration.class
 })
 public class Application {
     public static void main(String[] args) {

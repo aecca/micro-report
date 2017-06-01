@@ -1,4 +1,4 @@
-package com.bbva.reports.engine.processor;
+package com.bbva.reports.engine.datasource;
 
 import com.bbva.reports.engine.common.utils.UtilTypes;
 import com.bbva.reports.engine.data.ReportData;
@@ -10,9 +10,9 @@ import javax.sql.DataSource;
 import java.sql.Date;
 import java.util.List;
 
-public class SpringSQLProcessor extends SQLProcessor {
+public class SpringSQLDataSource extends SQLDataSource {
 
-    public SpringSQLProcessor(DataSource dataSource) {
+    public SpringSQLDataSource(DataSource dataSource) {
         super(dataSource);
     }
 

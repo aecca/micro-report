@@ -1,4 +1,4 @@
-package com.bbva.reports.engine.processor;
+package com.bbva.reports.engine.datasource;
 
 import com.bbva.reports.engine.data.ReportData;
 import com.bbva.reports.engine.model.ReportSource;
@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChainProcessor implements IProcessor {
+public class ChainDataSource implements IDataSource {
 
-    private List<IProcessor> processors;
-    private IProcessor selectProcessor;
+    private List<IDataSource> processors;
+    private IDataSource selectProcessor;
 
-    ChainProcessor(IProcessor[] procs) {
+    ChainDataSource(IDataSource[] procs) {
         this.processors = new ArrayList<>();
         processors.addAll(Arrays.asList(procs));
     }
 
-    ChainProcessor() {
+    ChainDataSource() {
         this.processors = new ArrayList<>();
     }
 
-    public void addProcessor(IProcessor processor) {
+    public void addProcessor(IDataSource processor) {
         processors.add(processor);
     }
 
@@ -34,7 +34,7 @@ public class ChainProcessor implements IProcessor {
     @Override
     public boolean support(ReportSource source) {
 
-        for(IProcessor p: processors) {
+        for(IDataSource p: processors) {
             if(p.support(source)) {
                 selectProcessor = p;
                 return true;

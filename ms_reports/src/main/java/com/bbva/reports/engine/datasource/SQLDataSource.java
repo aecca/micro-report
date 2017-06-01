@@ -1,4 +1,4 @@
-package com.bbva.reports.engine.processor;
+package com.bbva.reports.engine.datasource;
 
 import com.bbva.reports.engine.common.sql.ConnectionProvider;
 import com.bbva.reports.engine.common.utils.UtilTypes;
@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SQLProcessor implements IProcessor {
+public class SQLDataSource implements IDataSource {
 
     protected DataSource dataSource;
 
-    protected SQLProcessor(DataSource dataSource) {
+    protected SQLDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -91,7 +91,7 @@ public class SQLProcessor implements IProcessor {
                 java.sql.Date sqlDate = new java.sql.Date((Date.valueOf(value)).getTime());
                 aPreparedStatement.setDate(idx + 1, sqlDate);
             } else {
-                // @todo Add More type or aggregate types to engine
+                // @todo Add More types or aggregate types to engine
                 aPreparedStatement.setString(idx + 1, value);
             }
             idx++;
