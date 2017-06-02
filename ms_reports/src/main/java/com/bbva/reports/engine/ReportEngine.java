@@ -32,10 +32,10 @@ public class ReportEngine {
     }
 
     public ReportView createReportView(
-            int reportId,
+            String reportName,
             Map<String, Object> inputParams
     ) {
-        Report report = reportCollection.findOne(reportId);
+        Report report = reportCollection.openReport(reportName);
 
         if (null == report) {
             throw new IllegalArgumentException("El Reporte solicitado no existe");
@@ -84,6 +84,10 @@ public class ReportEngine {
         }
 
         return params;
+    }
+
+    public ReportCollection getReportsCollection() {
+        return reportCollection;
     }
 
     private void populateParams(List<ReportSourceParam> params,
