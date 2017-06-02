@@ -13,12 +13,14 @@
         <property name="password" value="${report.datasource.password}"/>
     </bean>
 
-    <bean id="reportService" class="com.bbva.reports.engine.ReportEngine">
+    <!-- Report Engine -->
+    <bean id="reportEngine" class="com.bbva.reports.engine.ReportEngine">
         <constructor-arg ref="chainDataSource"/>
         <constructor-arg ref="templateEngine"/>
         <constructor-arg ref="reportCollection"/>
-        <constructor-arg ref="viewFactory"/>
+        <constructor-arg ref="reportViewFactory"/>
     </bean>
+    <bean id="reportViewFactory" class="com.bbva.reports.engine.ReportViewFactory"/>
 
     <!-- Template Engine -->
     <bean id="templateEngine" class="com.bbva.reports.engine.template.MustacheEngine"/>

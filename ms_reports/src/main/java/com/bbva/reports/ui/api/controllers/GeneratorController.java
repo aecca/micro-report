@@ -15,12 +15,12 @@ import java.util.Map;
 @RestController
 public class GeneratorController {
     private ReportSourceTypeCollection reportSourceTypeRepository;
-    private final ReportEngine reportService;
+    private final ReportEngine reportEngine;
 
     @Autowired
-    public GeneratorController(ReportSourceTypeCollection reportSourceTypeRepository, ReportEngine reportService) {
+    public GeneratorController(ReportSourceTypeCollection reportSourceTypeRepository, ReportEngine reportEngine) {
         this.reportSourceTypeRepository = reportSourceTypeRepository;
-        this.reportService = reportService;
+        this.reportEngine = reportEngine;
     }
 
 
@@ -34,6 +34,6 @@ public class GeneratorController {
     public ModelAndView reports(
             @RequestParam Map<String, Object> reqParams,
             @RequestParam("reportId") int reportId) {
-        return new ModelAndView(reportService.generateReport(reportId, reqParams));
+        return new ModelAndView(reportEngine.createReportView(reportId, reqParams));
     }
 }

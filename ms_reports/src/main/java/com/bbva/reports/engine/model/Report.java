@@ -26,7 +26,7 @@ public class Report implements Serializable {
     public List<ReportSource> sources;
 
     @Enumerated(EnumType.STRING)
-    public FormatType type;
+    public ReportType type;
 
     @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -40,7 +40,7 @@ public class Report implements Serializable {
         return content;
     }
 
-    public FormatType type() {
+    public ReportType type() {
         return type;
     }
 
@@ -48,7 +48,7 @@ public class Report implements Serializable {
         return sources;
     }
 
-    public enum FormatType {
+    public enum ReportType {
         /**
          * Tipo de formato HTML, que puede ser generado mediante
          * algun editor.
