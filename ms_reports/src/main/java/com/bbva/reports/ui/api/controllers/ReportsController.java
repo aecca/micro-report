@@ -52,7 +52,7 @@ public class ReportsController {
         reportEngine.getReportCollection().save(report);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "Sucessfull report");
+        response.put("message", "The report was successfully saved");
         response.put("status", true);
 
         return response;
@@ -71,7 +71,7 @@ public class ReportsController {
         reportEngine.getReportCollection().deleteReport(name);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "Sucessfull report");
+        response.put("message", "The report was successfully deleted");
         response.put("status", true);
 
         return response;

@@ -3,7 +3,6 @@ package com.bbva.reports.ui;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.ImportResource;
 
@@ -14,23 +13,12 @@ import java.io.IOException;
         "classpath:application-config.xml",
         "classpath:reports-config.xml"
 })
-@EntityScan("com.bbva.reports.engine.model")
 @EnableAutoConfiguration(exclude = {
         MongoAutoConfiguration.class
 })
 public class Application {
 
     public static void main(String[] args) throws IOException {
-//        ReportEngine engine = new ReportEngine(
-//              new JSONDataSource(),
-//              new MustacheEngine(),
-//              new JsonReportCollection("/reports"),
-//              new ReportViewFactory()
-//        );
-//
-//        System.out.println(engine.getReportCollection().listReports());
-//        Report demo = demo = engine.getReportCollection().openReport("demo");;
-//        System.out.println(demo);
         SpringApplication.run(Application.class, args);
     }
 }

@@ -9,21 +9,22 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 
 public class JsonReportCollection implements ReportCollection {
 
-    private String path;
-    private ObjectMapper mapper;
-    private Map<String, String> registry;
+    private final static ObjectMapper mapper = new ObjectMapper();
 
-    public JsonReportCollection() {
-        mapper = new ObjectMapper();
+    static {
         mapper.setVisibility(FIELD, ANY);
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    private String path;
+
+    public JsonReportCollection() {
 
         File file = new File(System.getProperty("user.home"), ".reports");
         path = file.getAbsolutePath();
@@ -32,16 +33,7 @@ public class JsonReportCollection implements ReportCollection {
             if (!file.mkdir()) {
                 throw new IllegalArgumentException("Unable create report file in Home directory. Check permissions!");
             }
-
-            File fileRegistry = new File(path + "/registry.map");
-
-            if(file.exists()) {
-                try {
-                    registry = mapper.readValue(fileRegistry, Map.class);
-                } catch (IOException ignored) {}
-            }
         }
-
     }
 
     @Override
