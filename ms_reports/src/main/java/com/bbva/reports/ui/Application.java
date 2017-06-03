@@ -1,11 +1,5 @@
 package com.bbva.reports.ui;
 
-import com.bbva.reports.engine.ReportEngine;
-import com.bbva.reports.engine.ReportViewFactory;
-import com.bbva.reports.engine.datasource.JSONDataSource;
-import com.bbva.reports.engine.implement.JsonReportCollection;
-import com.bbva.reports.engine.model.Report;
-import com.bbva.reports.engine.template.MustacheEngine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,6 +28,7 @@ public class Application {
 //              new ReportViewFactory()
 //        );
 //
+//        System.out.println(engine.getReportCollection().listReports());
 //        Report demo = demo = engine.getReportCollection().openReport("demo");;
 //        System.out.println(demo);
         SpringApplication.run(Application.class, args);

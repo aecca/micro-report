@@ -1,19 +1,12 @@
 package com.bbva.reports.engine.datasource;
 
 import com.bbva.reports.engine.common.sql.ConnectionProvider;
-import com.bbva.reports.engine.common.utils.UtilTypes;
 import com.bbva.reports.engine.data.ReportData;
 import com.bbva.reports.engine.model.ReportSource;
 import com.bbva.reports.engine.model.ReportSourceParam;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,8 +62,8 @@ public class SQLDataSource implements IDataSource {
 
     @Override
     public boolean support(ReportSource source) {
-        String sourceType = source.type().name();
-        return sourceType.contains("SQL") || sourceType.contains("VIEW");
+        return  source.type() == ReportSource.Type.SQL ||
+                source.type() == ReportSource.Type.VIEW;
     }
 
     private void setStatementArguments(
@@ -80,19 +73,28 @@ public class SQLDataSource implements IDataSource {
 
         int idx = 0;
         for (ReportSourceParam param : arguments) {
-
-            String value = param.value();
-
-            if (UtilTypes.isNumeric(value)) {
-                aPreparedStatement.setInt(idx + 1, Integer.valueOf(value));
-            } else if (UtilTypes.isBoolean(value)) {
-                aPreparedStatement.setBoolean(idx + 1, Boolean.valueOf(value));
-            } else if (UtilTypes.isDate(value)) {
-                java.sql.Date sqlDate = new java.sql.Date((Date.valueOf(value)).getTime());
-                aPreparedStatement.setDate(idx + 1, sqlDate);
-            } else {
-                // @todo Add More types or aggregate types to engine
-                aPreparedStatement.setString(idx + 1, value);
+            switch (param.type()) {
+                case INT:
+                    aPreparedStatement.setInt(idx + 1, Integer.valueOf(param.value()));
+                    break;
+                case BOOL:
+                    aPreparedStatement.setBoolean(idx + 1, Boolean.valueOf(param.value()));
+                    break;
+                case LONG:
+                    aPreparedStatement.setLong(idx + 1, Long.valueOf(param.value()));
+                    break;
+                case FLOAT:
+                    aPreparedStatement.setFloat(idx + 1, Float.valueOf(param.value()));
+                    break;
+                case DOUBLE:
+                    aPreparedStatement.setDouble(idx + 1, Double.valueOf(param.value()));
+                    break;
+                case DATE:
+                    java.sql.Date sqlDate = new java.sql.Date((Date.valueOf(param.value())).getTime());
+                    aPreparedStatement.setDate(idx + 1, sqlDate);
+                    break;
+                default:
+                    aPreparedStatement.setString(idx + 1, param.value());
             }
             idx++;
         }

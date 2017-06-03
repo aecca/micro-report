@@ -1,6 +1,5 @@
 package com.bbva.reports.engine.datasource;
 
-import com.bbva.reports.engine.common.utils.UtilTypes;
 import com.bbva.reports.engine.data.ReportData;
 import com.bbva.reports.engine.model.ReportSourceParam;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -21,20 +20,29 @@ public class SpringSQLDataSource extends SQLDataSource {
         NamedParameterJdbcTemplate jdb = new NamedParameterJdbcTemplate(dataSource);
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
 
-        System.out.println("QUERY : " + query);
         for (ReportSourceParam arg : args) {
-
-            String value = arg.value();
-
-            if (UtilTypes.isNumeric(value)) {
-                paramSource.addValue(arg.name(), Integer.valueOf(value));
-            } else if (UtilTypes.isBoolean(value)) {
-                paramSource.addValue(arg.name(), Boolean.valueOf(value));
-            } else if (UtilTypes.isDate(value)) {
-                java.sql.Date sqlDate = new java.sql.Date((Date.valueOf(value)).getTime());
-                paramSource.addValue(arg.name(), sqlDate);
-            } else {
-                paramSource.addValue(arg.name(), value);
+            switch (arg.type()) {
+                case INT:
+                    paramSource.addValue(arg.name(), Integer.valueOf(arg.value()));
+                    break;
+                case BOOL:
+                    paramSource.addValue(arg.name(), Boolean.valueOf(arg.value()));
+                    break;
+                case LONG:
+                    paramSource.addValue(arg.name(), Long.valueOf(arg.value()));
+                    break;
+                case FLOAT:
+                    paramSource.addValue(arg.name(), Float.valueOf(arg.value()));
+                    break;
+                case DOUBLE:
+                    paramSource.addValue(arg.name(), Double.valueOf(arg.value()));
+                    break;
+                case DATE:
+                    java.sql.Date sqlDate = new java.sql.Date((Date.valueOf(arg.value())).getTime());
+                    paramSource.addValue(arg.name() + 1, sqlDate);
+                    break;
+                default:
+                    paramSource.addValue(arg.name(), arg.value());
             }
         }
 

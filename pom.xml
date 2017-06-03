@@ -5,7 +5,7 @@
 
 	<groupId>com.bbva</groupId>
 	<artifactId>micro-report</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<modules>
 		<module>ms_reports</module>
 		<module>ms_admin</module>
@@ -73,6 +73,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.bbva.reports.ui.Application</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

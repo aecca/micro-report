@@ -1,8 +1,10 @@
 package com.bbva.reports.engine.model;
 
 import com.bbva.reports.engine.common.utils.EnumType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ReportSourceParam {
 
     private String name;
@@ -35,6 +37,14 @@ public class ReportSourceParam {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Type type() {
+        return type;
     }
 
     @Override

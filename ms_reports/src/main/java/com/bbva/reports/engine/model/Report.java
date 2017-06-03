@@ -2,11 +2,14 @@ package com.bbva.reports.engine.model;
 
 import com.bbva.reports.engine.common.model.IdentifiedObject;
 import com.bbva.reports.engine.common.utils.EnumType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Report extends IdentifiedObject {
 
     private String name;
@@ -15,16 +18,9 @@ public class Report extends IdentifiedObject {
     private ReportType type;
     private Date createdAt;
 
-    public static Report create(String name, String content, List<ReportSource> sources, ReportType type) {
-
-        Report reportObj = new Report();
-        reportObj.name = name;
-        reportObj.content = content;
-        reportObj.sources = sources;
-        reportObj.type = type;
-        reportObj.createdAt = new Date();
-
-        return reportObj;
+    public Report() {
+        this.id = UUID.randomUUID().toString();
+        this.createdAt = new Date();
     }
 
     public String name() {
@@ -41,6 +37,10 @@ public class Report extends IdentifiedObject {
 
     public List<ReportSource> sources() {
         return sources;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

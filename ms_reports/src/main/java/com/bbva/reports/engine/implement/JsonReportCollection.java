@@ -4,75 +4,97 @@ import com.bbva.reports.engine.model.Report;
 import com.bbva.reports.engine.model.ReportCollection;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 
 public class JsonReportCollection implements ReportCollection {
 
-    public static final String EXT_JSON = "json";
-
     private String path;
-    private String extension;
+    private ObjectMapper mapper;
+    private Map<String, String> registry;
 
-    public JsonReportCollection() {}
+    public JsonReportCollection() {
+        mapper = new ObjectMapper();
+        mapper.setVisibility(FIELD, ANY);
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
-    public JsonReportCollection(String path) {
-        this.path = path;
-        this.extension = EXT_JSON;
-    }
+        File file = new File(System.getProperty("user.home"), ".reports");
+        path = file.getAbsolutePath();
 
-    public JsonReportCollection(String path, String extension) {
-        this.path = path;
-        this.extension = extension;
+        if (!file.exists()) {
+            if (!file.mkdir()) {
+                throw new IllegalArgumentException("Unable create report file in Home directory. Check permissions!");
+            }
+
+            File fileRegistry = new File(path + "/registry.map");
+
+            if(file.exists()) {
+                try {
+                    registry = mapper.readValue(fileRegistry, Map.class);
+                } catch (IOException ignored) {}
+            }
+        }
+
     }
 
     @Override
     public Report openReport(String fileName) throws IOException {
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setVisibility(FIELD, ANY);
-        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        File reportFile = new File(getFileName(fileName));
 
-        String realFileName = getFileName(fileName);
-        URL urlFile = getClass().getResource(realFileName);
-
-        if(urlFile == null) {
-            throw new IOException("Unable file location : " + realFileName);
+        if (!reportFile.exists()) {
+            throw new IOException("Unable file location : " + fileName);
         }
 
-        return mapper.readValue(urlFile, Report.class);
+        return mapper.readValue(reportFile, Report.class);
+    }
+
+    @Override
+    public List<Report> listReports() {
+
+        File[] listOfFiles = new File(path).listFiles();
+        List<Report> reports = new ArrayList<>();
+
+        if (listOfFiles == null) {
+            return reports;
+        }
+
+        for (File file : listOfFiles) {
+            try {
+                reports.add(mapper.readValue(file, Report.class));
+            } catch (IOException ignored) {}
+        }
+
+        return reports;
+    }
+
+    @Override
+    public void save(Report report) throws IOException {
+        mapper.writeValue(new File(getFileName(report.name())), report);
+    }
+
+    @Override
+    public void deleteReport(String fileName) throws IOException {
+
+        File reportFile = new File(getFileName(fileName));
+
+        if (!reportFile.exists()) {
+            throw new IOException("Unnable locate reportfile  : " + fileName);
+        }
+
+        if (!new File(reportFile.getPath()).delete()) {
+            throw new IOException("Unnable delete report");
+        }
     }
 
     private String getFileName(String filename) {
-
-        StringBuilder strFileName = new StringBuilder();
-
-        if(path != null)  {
-            strFileName.append(path);
-        }
-
-        strFileName.append("/");
-        strFileName.append(filename);
-
-        if(extension == null ) {
-            extension = EXT_JSON;
-        }
-
-        strFileName.append(".");
-        strFileName.append(extension);
-
-        return strFileName.toString();
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
+        return path + "/" + filename + ".json";
     }
 }

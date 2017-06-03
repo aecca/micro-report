@@ -27,6 +27,6 @@ public class JSONDataSource implements IDataSource {
     @Override
     public boolean support(ReportSource source)
     {
-        return source.type().name().contains("JSON");
+        return source.type() == ReportSource.Type.JSON;
     }
 }
