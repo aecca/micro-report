@@ -6,21 +6,20 @@
 
     <context:property-placeholder location="classpath:reports.properties"/>
 
-    <bean id="jdbReportDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${report.datasource.driver-class-name}"/>
-        <property name="url" value="${report.datasource.url}"/>
-        <property name="username" value="${report.datasource.username}"/>
-        <property name="password" value="${report.datasource.password}"/>
-    </bean>
-
     <!-- Report Engine -->
+    <bean id="reportViewFactory" class="com.bbva.reports.engine.ReportViewFactory"/>
+
     <bean id="reportEngine" class="com.bbva.reports.engine.ReportEngine">
         <constructor-arg ref="chainDataSource"/>
         <constructor-arg ref="templateEngine"/>
         <constructor-arg ref="reportCollection"/>
         <constructor-arg ref="reportViewFactory"/>
     </bean>
-    <bean id="reportViewFactory" class="com.bbva.reports.engine.ReportViewFactory"/>
+
+    <bean id="reportCollection" class="com.bbva.reports.engine.implement.JsonReportCollection">
+        <property name="path" value="${reports.path}"/>
+        <property name="extension" value="${reports.extension}"/>
+    </bean>
 
     <!-- Template Engine -->
     <bean id="templateEngine" class="com.bbva.reports.engine.template.MustacheEngine"/>
@@ -29,15 +28,24 @@
     <bean id="chainDataSource" class="com.bbva.reports.engine.datasource.ChainDataSource">
         <constructor-arg>
             <list>
-                <ref bean="sqlDataSource"/>
+                <!--<ref bean="sqlDataSource"/>-->
                 <ref bean="jsonDataSource"/>
             </list>
         </constructor-arg>
     </bean>
 
-    <bean id="sqlDataSource" class="com.bbva.reports.engine.datasource.SpringSQLDataSource">
-        <constructor-arg ref="jdbReportDataSource"/>
-    </bean>
+    <!--<bean id="sqlDataSource" class="com.bbva.reports.engine.datasource.SpringSQLDataSource">-->
+        <!--<constructor-arg ref="jdbReportDataSource"/>-->
+    <!--</bean>-->
 
     <bean id="jsonDataSource" class="com.bbva.reports.engine.datasource.JSONDataSource"/>
+
+    <!--&lt;!&ndash; Bussiness Report - Datasource &ndash;&gt;-->
+    <!--<bean id="jdbReportDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <!--<property name="driverClassName" value="${reports.datasource.driver-class-name}"/>-->
+        <!--<property name="url" value="${reports.datasource.url}"/>-->
+        <!--<property name="username" value="${reports.datasource.username}"/>-->
+        <!--<property name="password" value="${reports.datasource.password}"/>-->
+    <!--</bean>-->
+
 </beans>

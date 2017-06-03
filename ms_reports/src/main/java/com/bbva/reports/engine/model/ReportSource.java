@@ -1,50 +1,74 @@
 package com.bbva.reports.engine.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.bbva.reports.engine.common.utils.EnumType;
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.List;
 
-@Entity
-@Table(name = "tbl_report_source")
-public class ReportSource implements Serializable {
+public class ReportSource {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    private String name;
+    private String content;
+    private Type type;
 
-    @Column
-    public String name;
+    public static ReportSource create(
+            String name,
+            String content,
+            Type sourceType,
+            List<ReportSourceParam> params) {
 
-    @Column
-    public String content;
+        ReportSource repSource = new ReportSource();
+        repSource.name = name;
+        repSource.content = content;
+        repSource.type = sourceType;
+        repSource.params = params;
 
-    @Column
-    public boolean collection;
+        return repSource;
+    }
 
-    @OneToOne
-    @JoinColumn(name="report_source_type_id")
-    private ReportSourceType type;
-
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="report_source_id")
-    public List<ReportSourceParam> params;
+    private List<ReportSourceParam> params;
 
     public String name() {
         return name;
     }
+
     public String content() {
         return content;
     }
+
     public List<ReportSourceParam> params() {
         return params;
     }
 
-    public boolean isCollection() {
-        return collection;
+    public Type type() {
+        return type;
     }
 
-    public ReportSourceType type() {
-        return type;
+    @Override
+    public String toString() {
+        return "ReportSource{" +
+                "name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", type=" + type +
+                ", params=" + params +
+                '}';
+    }
+
+    public enum Type {
+        SQL,
+        VIEW,
+        JSON;
+
+        @JsonCreator
+        public static Type forValue(String value) {
+
+            Type eNum = EnumType.searchEnum(Type.class, value);
+
+            if (eNum == null) {
+                throw new IllegalArgumentException("Invalid source type: " + value);
+            }
+
+            return eNum;
+        }
     }
 }

@@ -1,0 +1,18 @@
+{
+  "id"  : "u1u11",
+  "name" : "Demo Reporte",
+  "content": "<h1> Hola :) </h1>",
+  "type": "html",
+  "sources": [
+    {
+      "name": "Simple json",
+      "content": "{\"hello\" : \"world\"}",
+      "type": "json",
+      "params" : [
+        {"name" : "cod_client", "type": "int",    "required": true},
+        {"name" : "cod_app",    "type": "string", "required": false}
+      ]
+    }
+  ],
+  "createdAt": "1993-06-01 01:32:01"
+}

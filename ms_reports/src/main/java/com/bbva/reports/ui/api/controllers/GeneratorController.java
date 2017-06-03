@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -22,6 +23,10 @@ public class GeneratorController {
     public ModelAndView reports(
             @RequestParam Map<String, Object> reqParams,
             @RequestParam("reportName") String reportName) {
-        return new ModelAndView(reportEngine.createReportView(reportName, reqParams));
+        try {
+            return new ModelAndView(reportEngine.createReportView(reportName, reqParams));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("El Reporte solicitado no existe", e);
+        }
     }
 }

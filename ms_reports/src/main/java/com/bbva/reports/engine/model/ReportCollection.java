@@ -1,10 +1,7 @@
 package com.bbva.reports.engine.model;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.IOException;
 
 public interface ReportCollection {
-    public Report openReport(String filName);
-    public Report openReport(File filName);
-    public Report openReport(InputStream fileStream);
+    public Report openReport(String filName) throws IOException;
 }

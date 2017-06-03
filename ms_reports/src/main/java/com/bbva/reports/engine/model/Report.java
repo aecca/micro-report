@@ -1,36 +1,31 @@
 package com.bbva.reports.engine.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.bbva.reports.engine.common.model.IdentifiedObject;
+import com.bbva.reports.engine.common.utils.EnumType;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "tbl_report")
-public class Report implements Serializable {
+public class Report extends IdentifiedObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    private String name;
+    private String content;
+    private List<ReportSource> sources;
+    private ReportType type;
+    private Date createdAt;
 
-    @Column(nullable = false, length = 40)
-    public String name;
+    public static Report create(String name, String content, List<ReportSource> sources, ReportType type) {
 
-    @Column
-    public String content;
+        Report reportObj = new Report();
+        reportObj.name = name;
+        reportObj.content = content;
+        reportObj.sources = sources;
+        reportObj.type = type;
+        reportObj.createdAt = new Date();
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "report_id")
-    public List<ReportSource> sources;
-
-    @Enumerated(EnumType.STRING)
-    public ReportType type;
-
-    @Column(name = "created_at")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    public Date createdAt;
+        return reportObj;
+    }
 
     public String name() {
         return name;
@@ -48,17 +43,40 @@ public class Report implements Serializable {
         return sources;
     }
 
+    @Override
+    public String toString() {
+        return "Report{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", sources=" + sources +
+                ", type=" + type +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
     public enum ReportType {
         /**
-         * Tipo de formato HTML, que puede ser generado mediante
+         * Tipo de formato HTML. este tipo de reporte debe ser generado mediante
          * algun editor.
          */
         HTML,
 
         /**
-         * Tipo de formato XML. este puede ser generado directamen.
+         * Tipo de formato XML. este puede ser generado directamente
          * o tambien desde BIRT Designer..
          */
         XML;
+
+        @JsonCreator
+        public static ReportType forValue(String value) {
+            ReportType eNum = EnumType.searchEnum(ReportType.class, value);
+
+            if (eNum == null) {
+                throw new IllegalArgumentException("Invalid report type: " + value);
+            }
+
+            return eNum;
+        }
     }
 }

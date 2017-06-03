@@ -16,9 +16,9 @@ import java.util.Map;
 
 public class ReportView extends AbstractView {
 
-    private static final String PARAM_FORMAT = "format";
-    private static final String FORMAT_HTML  = "html";
-    private static final String FORMAT_PDF   = "pdf";
+    private static final String PARAM_FORMAT  = "format";
+    private static final String FORMAT_HTML   = "html";
+    private static final String FORMAT_PDF    = "pdf";
     private static final String PARAM_CONTENT = "content";
 
     private IReportEngine engine;
@@ -61,6 +61,7 @@ public class ReportView extends AbstractView {
 
         runnable = engine.openReportDesign(getStreamContent(reportContent));
         IRunAndRenderTask runAndRenderTask = engine.createRunAndRenderTask(runnable);
+        runAndRenderTask.setParameterValues(params);
 
         String format = request.getParameter(PARAM_FORMAT);
 

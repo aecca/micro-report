@@ -7,7 +7,8 @@
 	<artifactId>micro-report</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-        <module>ms_reports</module>
+		<module>ms_reports</module>
+		<module>ms_admin</module>
     </modules>
 	<packaging>pom</packaging>
 
