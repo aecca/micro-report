@@ -41,7 +41,6 @@ public class ReportEngine {
         ReportView reportView = reportViewFactory.createView();
         reportView.setReportType(report.type());
         reportView.addParams(proccessDataSources(sources, inputParams));
-        reportView.addParams(inputParams);
         reportView.setReportContent(report.type() == ReportType.XML ?
                 report.content() :
                 template.renderString(report.content(), reportView.params()));
