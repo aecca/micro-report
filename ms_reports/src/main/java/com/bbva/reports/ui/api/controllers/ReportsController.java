@@ -2,6 +2,7 @@ package com.bbva.reports.ui.api.controllers;
 
 import com.bbva.reports.engine.ReportEngine;
 import com.bbva.reports.engine.model.Report;
+import com.bbva.reports.engine.model.ReportSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,6 +49,15 @@ public class ReportsController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public Map saveReport(@RequestBody Report report) throws IOException {
+
+        if(report.name() == null || report.name().isEmpty()) {
+            throw new IllegalArgumentException("Report name is required");
+        }
+
+        for(ReportSource source: report.sources()) {
+
+
+        }
 
         reportEngine.getReportCollection().save(report);
 

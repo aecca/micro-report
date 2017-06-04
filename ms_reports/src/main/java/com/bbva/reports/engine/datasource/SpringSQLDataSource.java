@@ -21,6 +21,9 @@ public class SpringSQLDataSource extends SQLDataSource {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
 
         for (ReportSourceParam arg : args) {
+            if(arg.type() == null) {
+                continue;
+            }
             switch (arg.type()) {
                 case INT:
                     paramSource.addValue(arg.name(), Integer.valueOf(arg.value()));

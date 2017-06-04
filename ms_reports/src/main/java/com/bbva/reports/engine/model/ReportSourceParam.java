@@ -31,9 +31,9 @@ public class ReportSourceParam {
         return value;
     }
 
-    public Boolean isRequired() {
+    public boolean isRequired() {
         return required;
-    }
+    };
 
     public void setValue(String value) {
         this.value = value;
@@ -72,7 +72,7 @@ public class ReportSourceParam {
             if(value == null) {
                 // Por defecto, en caso no se especifique el tipo de variable,
                 // se asume que es del tipo String.
-                return Type.STRING;
+                return STRING;
             }
 
             Type eNum = EnumType.searchEnum(Type.class, value);

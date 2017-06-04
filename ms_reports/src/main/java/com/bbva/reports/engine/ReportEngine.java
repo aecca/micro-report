@@ -65,16 +65,7 @@ public class ReportEngine {
             }
 
             ReportData data = this.datasource.getData(source.content(), sourceParams);
-
-            System.out.println("[Source Type] : " + source.type().name());
-            System.out.println("[Input Params]: " + inputParams);
-            System.out.println("[Source Params]: " + sourceParams.toString());
-            System.out.println("[Source object] :" + source);
-            System.out.println("[Source size] : " + data.size());
-            System.out.println("[Params] : " + params);
-            System.out.println("[Params size] : " + params.size());
-
-            params.put(source.name(), data);
+            params.put(source.name(), source.isCollection() ? data : data.size() > 0 ? data.get(0) : null );
         }
 
         return params;
@@ -84,7 +75,7 @@ public class ReportEngine {
                                 Map<String, Object> inputParam) {
 
         for (ReportSourceParam pm : params) {
-            if (pm.isRequired() && !inputParam.containsKey(pm.name())) {
+            if (!inputParam.containsKey(pm.name())) {
                 throw new IllegalArgumentException("El parametro '" + pm.name() + "' es requerido");
             }
             pm.setValue((String) inputParam.get(pm.name()));

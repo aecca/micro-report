@@ -12,6 +12,8 @@ public class ReportSource {
     private String name;
     private String content;
     private Type type;
+    private boolean collection = false;
+
 
     public static ReportSource create(
             String name,
@@ -45,6 +47,9 @@ public class ReportSource {
     public Type type() {
         return type;
     }
+
+    public boolean isCollection() { return collection; }
+
 
     public void setName(String name) {
         this.name = name;

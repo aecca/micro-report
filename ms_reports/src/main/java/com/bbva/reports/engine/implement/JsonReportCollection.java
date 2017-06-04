@@ -78,7 +78,7 @@ public class JsonReportCollection implements ReportCollection {
         File reportFile = new File(getFileName(fileName));
 
         if (!reportFile.exists()) {
-            throw new IOException("Unnable locate reportfile  : " + fileName);
+            throw new IOException("Report file doesn't exists : " + fileName);
         }
 
         if (!new File(reportFile.getPath()).delete()) {
