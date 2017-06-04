@@ -11,10 +11,11 @@ import java.util.Map;
 
 public class JSONDataSource implements IDataSource {
 
+    private final static ObjectMapper mapper = new ObjectMapper();
+
     @Override
     public ReportData getData(String json, List<ReportSourceParam> args) {
         ReportData items = new ReportData();
-        ObjectMapper mapper = new ObjectMapper();
         try {
             items.add(mapper.readValue(json, new TypeReference<Map<String, Object>>() {}));
 
@@ -27,6 +28,6 @@ public class JSONDataSource implements IDataSource {
     @Override
     public boolean support(ReportSource source)
     {
-        return source.type().name().contains("JSON");
+        return source.type() == ReportSource.Type.JSON;
     }
 }

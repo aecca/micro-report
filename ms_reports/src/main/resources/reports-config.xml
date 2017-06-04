@@ -6,19 +6,17 @@
 
     <context:property-placeholder location="classpath:reports.properties"/>
 
-    <bean id="jdbReportDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${report.datasource.driver-class-name}"/>
-        <property name="url" value="${report.datasource.url}"/>
-        <property name="username" value="${report.datasource.username}"/>
-        <property name="password" value="${report.datasource.password}"/>
-    </bean>
+    <!-- Report Engine -->
+    <bean id="reportViewFactory" class="com.bbva.reports.engine.ReportViewFactory"/>
 
-    <bean id="reportService" class="com.bbva.reports.engine.ReportEngine">
+    <bean id="reportEngine" class="com.bbva.reports.engine.ReportEngine">
         <constructor-arg ref="chainDataSource"/>
         <constructor-arg ref="templateEngine"/>
         <constructor-arg ref="reportCollection"/>
-        <constructor-arg ref="viewFactory"/>
+        <constructor-arg ref="reportViewFactory"/>
     </bean>
+
+    <bean id="reportCollection" class="com.bbva.reports.engine.implement.JsonReportCollection" />
 
     <!-- Template Engine -->
     <bean id="templateEngine" class="com.bbva.reports.engine.template.MustacheEngine"/>
@@ -38,4 +36,13 @@
     </bean>
 
     <bean id="jsonDataSource" class="com.bbva.reports.engine.datasource.JSONDataSource"/>
+
+    <!-- Bussiness Report - Datasource -->
+    <bean id="jdbReportDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${reports.datasource.driver-class-name}"/>
+        <property name="url" value="${reports.datasource.url}"/>
+        <property name="username" value="${reports.datasource.username}"/>
+        <property name="password" value="${reports.datasource.password}"/>
+    </bean>
+
 </beans>

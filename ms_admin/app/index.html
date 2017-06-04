@@ -1,15 +1,284 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <link rel="stylesheet" href="../dist/styles.css">
+    <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css"/>
+    <style type="text/css">
+        .container .title {
+            margin: 30px 0 50px 0;
+        }
 
+        .container .title h3 {
+            font-size: 15px;
+        }
+
+        .container .subtile {
+            padding: 10px 0px 20px 0;
+        }
+
+        #content {
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="btn btn-danger">Hola :)</div>
-<script type="text/javascript" async src="../dist/bundle.js"></script>
+<div class="container" ng-controller="FormController" ng-cloak>
+    <div class="title">
+        <h2>Reporter v1.</h2>
+        <h3>Generador de Reportes/Documentos on the fly!</h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <h3 class="breadcrumb">Listado de Reportes</h3>
+            <div ng-if="reports.length == 0"> Obteniendos reportes</div>
+            <ul ng-if="reports && reports.length > 0" class="list-group">
+                <a href="" ng-click="openReport($index)" ng-repeat="rep in reports"
+                   class="list-group-item track by $index">
+                    {{rep.name}}
+                    <div style="float:right">
+                        <button ng-click="deleteReport(rep.name)" class="btn btn-xs btn-danger"><i
+                                class="icon icon-close">&times;</i></button>
+                    </div>
+                </a>
+            </ul>
+        </div>
+        <div class="col-xs-9">
+            <h3 class="subtile">Info Reporte</h3>
+            <form sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(form)"></form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.min.js"></script>
+<script src="http://schemaform.io/bower_components/objectpath/lib/ObjectPath.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tv4/1.3.0/tv4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-schema-form/0.8.13/schema-form.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-schema-form/0.8.13/bootstrap-decorator.min.js"></script>
+
+
+<script type="text/javascript">
+    const serverApi = "http://localhost:9091/reports";
+    const notNulls = (key,value) => value === null? undefined : value;
+
+    function FormController($scope, $http) {
+
+        $scope.schema = {
+            "title": "Reporte",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "title": "Tipo del Reporte",
+                    "type": "string",
+                    "enum": ['HTML', 'XML']
+                },
+                "name": {
+                    "title": "Nombre del Reporte",
+                    "type": "string"
+                },
+                "content": {
+                    "title": "Reporte",
+                    "type": "string",
+                    "x-schema-form": {
+                        "type": "textarea",
+                        "placeholder": "Aqui pegar el HTML, XML, etc.."
+                    }
+                },
+
+                "sources": {
+                    "title": "Datos del Reporte",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "title": "Tipo",
+                                "enum": ['SQL', 'VIEW', 'JSON']
+                            },
+                            "name": {
+                                "type": "string",
+                                "title": "Nombre",
+                            },
+                            "content": {
+                                "type": "string",
+                                "title": "Contenido"
+                            },
+                            "collection": {
+                                "type": "boolean",
+                                "title": "Colleccion?"
+                            },
+                            "params": {
+                                "title": "Parametros del datasource",
+                                "descripcion": "Definir parametros del request",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {"type": "string", "title": "Nombre"},
+                                        "type": {
+                                            "type": "string",
+                                            "title": "Tipo",
+                                            "enum": ['STRING', 'INT', 'DOUBLE', 'FLOAT', 'DOUBLE', 'BOOLEAN', 'DATE']
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                },
+            },
+            "required": [
+                "type",
+                "name",
+                "content"
+            ]
+        };
+
+        $scope.form = [
+            {
+                "type": "section",
+                "htmlClass": "row",
+                "items": [
+                    {
+                        "type": "section",
+                        "htmlClass": "col-xs-6",
+                        "items": [
+                            "name"
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "col-xs-6",
+                        "items": [
+                            "type",
+                        ]
+                    }
+                ]
+            },
+
+            {
+                "key": "content",
+                "type": "textarea",
+            },
+            {
+                "type": "fieldset",
+                "title": "Datasource",
+            },
+            {
+                "key": "sources",
+                "type": "tabarray",
+                "add": "Agregar",
+                "remove": "Eliminar",
+                "style": {
+                    "remove": "btn-danger"
+                },
+                "title": "{{ value.name || 'souce'+$index }}",
+                "items": [
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
+                                    "sources[].name"
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-6",
+                                "items": [
+                                    "sources[].type",
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "key": "sources[].content",
+                        "type": "textarea"
+                    },
+                    {
+                        "key": "sources[].collection",
+                        "type": "checkbox"
+                    },
+                    {
+                        "key": "sources[].params",
+                        "add": "New",
+                        "remove": "Remove",
+                        "style": {
+                            "add": "btn-success",
+                            "remove": "btn-danger"
+                        },
+                        "items": [
+                            "sources[].params[].name",
+                            "sources[].params[].type",
+                        ],
+                    }
+                ]
+            },
+            {
+                "type": "fieldset"
+            },
+            {
+                "type": "submit",
+                "style": "btn-info btn-large",
+                "title": "Guardar"
+            }
+        ];
+
+        $scope.model = {};
+
+        /**
+         * Abrir el editor del reporte
+         */
+        $scope.openReport = (index) => {
+            $scope.model = $scope.reports[index];
+        };
+
+        $scope.deleteReport = (reportName) => {
+            if (confirm("Esta seguro que desea eliminar el reporte : " + reportName)) {
+                $http.delete(serverApi + "/" + reportName)
+                    .then(data => {
+                        alert("Se eliminó correctamente el reporte");
+                        $scope.loadReports();
+                    })
+                    .catch(err => alert("No se pudo eliminar el reporte"));
+
+            }
+        };
+
+        $scope.onSubmit = function (form) {
+            $scope.$broadcast('schemaFormValidate');
+
+
+            $http.post(serverApi, JSON.stringify($scope.model, notNulls))
+                .then(data => {
+                    alert("Se guardo correctamente el reporte");
+                    $scope.loadReports()
+                })
+                .catch(err => alert("No se pudo agregar el reporte " + err.message));
+
+        };
+
+        $scope.loadReports = () => {
+            $http.get(serverApi)
+                .then(response => $scope.reports = response.data)
+                .catch(err => console.error(err))
+        };
+
+        $scope.loadReports();
+
+    }
+
+    angular.module('app', ['schemaForm', 'ngSanitize'])
+        .controller('FormController', FormController);
+
+</script>
 </body>
 </html>

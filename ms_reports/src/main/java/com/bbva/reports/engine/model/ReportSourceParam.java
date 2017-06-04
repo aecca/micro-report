@@ -1,45 +1,87 @@
 package com.bbva.reports.engine.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.bbva.reports.engine.common.utils.EnumType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-@Entity
-@Table(name = "tbl_report_source_param")
-public class ReportSourceParam implements Serializable {
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public class ReportSourceParam {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    private String name;
+    private String value;
+    private Boolean required = false;
+    private Type type;
 
-    @Column
-    public String name;
+    public static ReportSourceParam create(String name, String value, Type type, boolean isRequired) {
 
-    @Column
-    public String value;
+        ReportSourceParam repSourceParam = new ReportSourceParam();
+        repSourceParam.name = name;
+        repSourceParam.value = value;
+        repSourceParam.type  = type;
+        repSourceParam.required = isRequired;
 
-    @Column
-    public Boolean required;
+        return repSourceParam;
+    }
 
     public String name() {
         return name;
     }
-    public String value() { return value; };
+
+    public String value() {
+        return value;
+    }
+
+    public boolean isRequired() {
+        return required;
+    };
 
     public void setValue(String value) {
         this.value = value;
     }
 
-    public Boolean isRequired() {
-        return required;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Type type() {
+        return type;
     }
 
     @Override
     public String toString() {
         return "ReportSourceParam{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", value='" + value + '\'' +
                 ", required=" + required +
+                ", type=" + type +
                 '}';
+    }
+
+    public enum Type {
+        INT,
+        LONG,
+        FLOAT,
+        DOUBLE,
+        BOOL,
+        DATE,
+        STRING;
+
+        @JsonCreator
+        public static Type forValue(String value) {
+
+            if(value == null) {
+                // Por defecto, en caso no se especifique el tipo de variable,
+                // se asume que es del tipo String.
+                return STRING;
+            }
+
+            Type eNum = EnumType.searchEnum(Type.class, value);
+
+            if (eNum == null) {
+                throw new IllegalArgumentException("Invalid param type: " + value);
+            }
+
+            return eNum;
+        }
     }
 }

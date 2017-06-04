@@ -1,50 +1,85 @@
 package com.bbva.reports.engine.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.bbva.reports.engine.common.utils.EnumType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.List;
 
-@Entity
-@Table(name = "tbl_report_source")
-public class ReportSource implements Serializable {
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public class ReportSource {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
-
-    @Column
-    public String name;
-
-    @Column
-    public String content;
-
-    @Column
-    public boolean collection;
-
-    @OneToOne
-    @JoinColumn(name="report_source_type_id")
-    private ReportSourceType type;
+    private String name;
+    private String content;
+    private Type type;
+    private boolean collection = false;
 
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="report_source_id")
-    public List<ReportSourceParam> params;
+    public static ReportSource create(
+            String name,
+            String content,
+            Type sourceType,
+            List<ReportSourceParam> params) {
+
+        ReportSource repSource = new ReportSource();
+        repSource.name = name;
+        repSource.content = content;
+        repSource.type = sourceType;
+        repSource.params = params;
+
+        return repSource;
+    }
+
+    private List<ReportSourceParam> params;
 
     public String name() {
         return name;
     }
+
     public String content() {
         return content;
     }
+
     public List<ReportSourceParam> params() {
         return params;
     }
 
-    public boolean isCollection() {
-        return collection;
+    public Type type() {
+        return type;
     }
 
-    public ReportSourceType type() {
-        return type;
+    public boolean isCollection() { return collection; }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "ReportSource{" +
+                "name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", type=" + type +
+                ", params=" + params +
+                '}';
+    }
+
+    public enum Type {
+        SQL,
+        VIEW,
+        JSON;
+
+        @JsonCreator
+        public static Type forValue(String value) {
+
+            Type eNum = EnumType.searchEnum(Type.class, value);
+
+            if (eNum == null) {
+                throw new IllegalArgumentException("Invalid source type: " + value);
+            }
+
+            return eNum;
+        }
     }
 }
