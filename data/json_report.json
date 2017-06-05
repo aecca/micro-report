@@ -1,0 +1,1 @@
+{"id":"u1u11","name":"json_report","content":"<h1> Hola {{user.name}}, bienvenido al sistema </h1>","sources":[{"name":"user","content":"{\"name\" : \"Juan Perez\"}","type":"JSON","collection":false,"params":[{"name":null,"value":null,"required":false,"type":null}]}],"type":"HTML","createdAt":"2017-06-03 14:44:29"}

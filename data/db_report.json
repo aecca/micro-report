@@ -1,0 +1,1 @@
+{"id":"u1u11","name":"db_report","content":"{{#users}}\n\n <li> {{name}}  - {{email}} </li>\n\n{{/users}}","sources":[{"name":"users","content":"SELECT * FROM tbl_client WHERE code=:codigoCliente","type":"SQL","collection":false,"params":[{"name":"codigoCliente","value":null,"required":false,"type":"STRING"}]}],"type":"HTML","createdAt":"2017-06-03 14:44:29"}
