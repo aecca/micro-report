@@ -2,7 +2,7 @@ package com.bbva.reports.ui.api.controllers;
 
 import com.bbva.reports.engine.ReportEngine;
 import com.bbva.reports.engine.model.Report;
-import com.bbva.reports.engine.model.ReportSource;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +21,8 @@ import java.util.Map;
 @RestController
 public class ReportsController {
     private final ReportEngine reportEngine;
+    static final Logger logger = Logger.getLogger(ReportsController.class);
+
 
     @Autowired
     public ReportsController(ReportEngine reportEngine) {
@@ -35,6 +37,7 @@ public class ReportsController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public List<Report> listReports() throws IOException {
+        logger.info("Report generate  by codApplication = " + "APP001");
         return reportEngine
                 .getReportCollection()
                 .listReports();
@@ -52,11 +55,6 @@ public class ReportsController {
 
         if(report.name() == null || report.name().isEmpty()) {
             throw new IllegalArgumentException("Report name is required");
-        }
-
-        for(ReportSource source: report.sources()) {
-
-
         }
 
         reportEngine.getReportCollection().save(report);
