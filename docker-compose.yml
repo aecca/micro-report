@@ -1,0 +1,29 @@
+version: '3'
+services:
+
+  postgres:
+    image: postgres:9.6.3
+    ports:
+      - "5433:5432"
+    volumes:
+       - .:/docker-entrypoint-initdb.d/
+    environment:
+      POSTGRES_DB: db_bbva_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+
+  mongodb:
+    image: mongo:3.0.4
+    ports:
+       - "27017:27017"
+
+  app_rest:
+    build: ./ms_reports
+    volumes:
+      - ./ms_reports/target:/app
+      - ~/.reports:/root/.reports/
+    ports:
+      - "8000:8000"
+    links:
+      - mongodb
+      - postgres

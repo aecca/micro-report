@@ -14,25 +14,52 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+SET search_path = public, pg_catalog;
+
+ALTER TABLE IF EXISTS ONLY public.tbl_account_cts DROP CONSTRAINT IF EXISTS tbl_account_cts_tbl_account_id_fk;
+ALTER TABLE IF EXISTS ONLY public.tbl_account_card DROP CONSTRAINT IF EXISTS tbl_account_card_account_id__fk;
+ALTER TABLE IF EXISTS ONLY public.tbl_account DROP CONSTRAINT IF EXISTS fkkdg83xiuq40y5d9qh1sc6yuyu;
+ALTER TABLE IF EXISTS ONLY public.tbl_transaction DROP CONSTRAINT IF EXISTS fk_transaction_type;
+ALTER TABLE IF EXISTS ONLY public.tbl_transaction DROP CONSTRAINT IF EXISTS fk_account_id;
+ALTER TABLE IF EXISTS ONLY public.tbl_account DROP CONSTRAINT IF EXISTS fk51elkvb01o38w25jt3fp76gqi;
+ALTER TABLE IF EXISTS ONLY public.tbl_transaction_type DROP CONSTRAINT IF EXISTS tbl_transaction_type_pkey;
+ALTER TABLE IF EXISTS ONLY public.tbl_transaction DROP CONSTRAINT IF EXISTS tbl_transaction_pkey;
+ALTER TABLE IF EXISTS ONLY public.tbl_client DROP CONSTRAINT IF EXISTS tbl_client_pkey;
+ALTER TABLE IF EXISTS ONLY public.tbl_account DROP CONSTRAINT IF EXISTS tbl_account_pkey;
+ALTER TABLE IF EXISTS ONLY public.tbl_account_card DROP CONSTRAINT IF EXISTS tbl_account_card_pkey;
+ALTER TABLE IF EXISTS public.tbl_transaction_type ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.tbl_transaction ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.tbl_client ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.tbl_account_card ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE IF EXISTS public.tbl_account ALTER COLUMN id DROP DEFAULT;
+DROP SEQUENCE IF EXISTS public.tbl_transaction_type_id_seq;
+DROP TABLE IF EXISTS public.tbl_transaction_type;
+DROP SEQUENCE IF EXISTS public.tbl_transaction_id_seq;
+DROP TABLE IF EXISTS public.tbl_transaction;
+DROP SEQUENCE IF EXISTS public.tbl_client_id_seq;
+DROP TABLE IF EXISTS public.tbl_client;
+DROP SEQUENCE IF EXISTS public.tbl_account_id_seq;
+DROP TABLE IF EXISTS public.tbl_account_cts;
+DROP SEQUENCE IF EXISTS public.tbl_account_card_id_seq;
+DROP TABLE IF EXISTS public.tbl_account_card;
+DROP TABLE IF EXISTS public.tbl_account;
+DROP EXTENSION IF EXISTS plpgsql;
+DROP SCHEMA IF EXISTS public;
 --
--- Name: db_bbva_dev; Type: DATABASE; Schema: -; Owner: postgres
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE db_bbva_dev WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'C' LC_CTYPE = 'C';
+CREATE SCHEMA public;
 
 
-ALTER DATABASE db_bbva_dev OWNER TO postgres;
+ALTER SCHEMA public OWNER TO postgres;
 
-\connect db_bbva_dev
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
+COMMENT ON SCHEMA public IS 'standard public schema';
+
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -289,25 +316,21 @@ ALTER TABLE ONLY tbl_transaction_type ALTER COLUMN id SET DEFAULT nextval('tbl_t
 -- Data for Name: tbl_account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY tbl_account (id, client_id, user_id, type, active) FROM stdin;
-1	1	1	AHORRO	t
-2	1	1	CTS	t
-3	1	1	CORRIENTE	f
-4	1	1	CORRIENTE	f
-5	1	1	CORRIENTE	t
-\.
+INSERT INTO tbl_account (id, client_id, user_id, type, active) VALUES (1, 1, 1, 'AHORRO', true);
+INSERT INTO tbl_account (id, client_id, user_id, type, active) VALUES (2, 1, 1, 'CTS', true);
+INSERT INTO tbl_account (id, client_id, user_id, type, active) VALUES (3, 1, 1, 'CORRIENTE', false);
+INSERT INTO tbl_account (id, client_id, user_id, type, active) VALUES (4, 1, 1, 'CORRIENTE', false);
+INSERT INTO tbl_account (id, client_id, user_id, type, active) VALUES (5, 1, 1, 'CORRIENTE', true);
 
 
 --
 -- Data for Name: tbl_account_card; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY tbl_account_card (id, number, key, balance_available, balance_used, type, account_id, active) FROM stdin;
-3	00001236	1992	20000	0	CREDITO	3	\N
-4	00001236	1992	30000	0	CREDITO	4	\N
-2	00001235	1993	20000	80000	CREDITO	5	t
-1	00001234	1993	2000	0	DEBITO	1	t
-\.
+INSERT INTO tbl_account_card (id, number, key, balance_available, balance_used, type, account_id, active) VALUES (3, '00001236', '1992', 20000, 0, 'CREDITO', 3, NULL);
+INSERT INTO tbl_account_card (id, number, key, balance_available, balance_used, type, account_id, active) VALUES (4, '00001236', '1992', 30000, 0, 'CREDITO', 4, NULL);
+INSERT INTO tbl_account_card (id, number, key, balance_available, balance_used, type, account_id, active) VALUES (2, '00001235', '1993', 20000, 80000, 'CREDITO', 5, true);
+INSERT INTO tbl_account_card (id, number, key, balance_available, balance_used, type, account_id, active) VALUES (1, '00001234', '1993', 2000, 0, 'DEBITO', 1, true);
 
 
 --
@@ -321,9 +344,7 @@ SELECT pg_catalog.setval('tbl_account_card_id_seq', 4, true);
 -- Data for Name: tbl_account_cts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY tbl_account_cts (account_id, ammount) FROM stdin;
-2	30000.0000
-\.
+INSERT INTO tbl_account_cts (account_id, ammount) VALUES (2, 30000.0000);
 
 
 --
@@ -337,10 +358,8 @@ SELECT pg_catalog.setval('tbl_account_id_seq', 5, true);
 -- Data for Name: tbl_client; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY tbl_client (id, code, user_id, name, email, lastname) FROM stdin;
-1	C01	1	Andy	andy.ecca@gmail.com	Ecca Campaña
-2	C02	2	Ernesto Anaya	ernestex@gmail.com	Anaya Ruiz
-\.
+INSERT INTO tbl_client (id, code, user_id, name, email, lastname) VALUES (1, 'C01', 1, 'Andy', 'andy.ecca@gmail.com', 'Ecca Campaña');
+INSERT INTO tbl_client (id, code, user_id, name, email, lastname) VALUES (2, 'C02', 2, 'Ernesto Anaya', 'ernestex@gmail.com', 'Anaya Ruiz');
 
 
 --
@@ -354,13 +373,11 @@ SELECT pg_catalog.setval('tbl_client_id_seq', 2, true);
 -- Data for Name: tbl_transaction; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY tbl_transaction (id, detail, amount, operation_number, currency, transaction_type_id, account_id, date_transaction) FROM stdin;
-1	SPOTIFY STOCOLM	23.00	1	USD	8	1	2017-05-05 00:40:20.771
-2	NETFLIX	32.00	2	USD	8	1	2017-05-05 00:41:29.296
-3	LATAM AIR	225.00	3	PEN	8	1	2017-05-07 00:42:36.172
-4	CINEPLANET SALAVERRY	65.23	4	PEN	8	1	2017-06-07 07:46:45.526
-5	RETIRO	500.00	5	PEN	1	1	2017-06-07 12:30:18.129
-\.
+INSERT INTO tbl_transaction (id, detail, amount, operation_number, currency, transaction_type_id, account_id, date_transaction) VALUES (1, 'SPOTIFY STOCOLM', 23.00, 1, 'USD', 8, 1, '2017-05-05 00:40:20.771');
+INSERT INTO tbl_transaction (id, detail, amount, operation_number, currency, transaction_type_id, account_id, date_transaction) VALUES (2, 'NETFLIX', 32.00, 2, 'USD', 8, 1, '2017-05-05 00:41:29.296');
+INSERT INTO tbl_transaction (id, detail, amount, operation_number, currency, transaction_type_id, account_id, date_transaction) VALUES (3, 'LATAM AIR', 225.00, 3, 'PEN', 8, 1, '2017-05-07 00:42:36.172');
+INSERT INTO tbl_transaction (id, detail, amount, operation_number, currency, transaction_type_id, account_id, date_transaction) VALUES (4, 'CINEPLANET SALAVERRY', 65.23, 4, 'PEN', 8, 1, '2017-06-07 07:46:45.526');
+INSERT INTO tbl_transaction (id, detail, amount, operation_number, currency, transaction_type_id, account_id, date_transaction) VALUES (5, 'RETIRO', 500.00, 5, 'PEN', 1, 1, '2017-06-07 12:30:18.129');
 
 
 --
@@ -374,16 +391,14 @@ SELECT pg_catalog.setval('tbl_transaction_id_seq', 5, true);
 -- Data for Name: tbl_transaction_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY tbl_transaction_type (id, name) FROM stdin;
-1	RETIRO
-2	TRANSFERENCIA
-3	SERVICIOS
-4	PAGO TARJETA
-5	PAGO CREDITO
-6	ABONO TCS
-7	RETIRO CTS
-8	PAGO
-\.
+INSERT INTO tbl_transaction_type (id, name) VALUES (1, 'RETIRO');
+INSERT INTO tbl_transaction_type (id, name) VALUES (2, 'TRANSFERENCIA');
+INSERT INTO tbl_transaction_type (id, name) VALUES (3, 'SERVICIOS');
+INSERT INTO tbl_transaction_type (id, name) VALUES (4, 'PAGO TARJETA');
+INSERT INTO tbl_transaction_type (id, name) VALUES (5, 'PAGO CREDITO');
+INSERT INTO tbl_transaction_type (id, name) VALUES (6, 'ABONO TCS');
+INSERT INTO tbl_transaction_type (id, name) VALUES (7, 'RETIRO CTS');
+INSERT INTO tbl_transaction_type (id, name) VALUES (8, 'PAGO');
 
 
 --
