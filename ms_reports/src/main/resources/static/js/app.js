@@ -1,6 +1,3 @@
-const serverApi = "http://localhost:9091/reports";
-const notNulls = (key,value) => value === null? undefined : value;
-
 function FormController($scope, $http) {
 
     $scope.schema = {
