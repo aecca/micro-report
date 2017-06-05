@@ -4,11 +4,11 @@ install: ## Install project
 	mvn clean install
 
 build: ## build image, usage: make build, make build image=nginx
-	sed -i -e 's/host=localhost/host=mongodb/g'  ms_reports/src/main/resources/log4j.properties
-	sed -i -e 's/://localhost/://postgres/g' ms_reports/src/main/resources/reports.properties
+	sed -i -e "s/host=localhost/host=mongodb/g"  ms_reports/src/main/resources/log4j.properties
+	sed -i -e "s/\:\/\/localhost/\:\/\/postgres/g" ms_reports/src/main/resources/reports.properties
 	mvn clean install
-	sed -i -e 's/host=mongodb/host=localhost/g'  ms_reports/src/main/resources/log4j.properties
-	sed -i -e 's/://postgres/://localhost/g' ms_reports/src/main/resources/reports.properties
+	sed -i -e "s/host=mongodb/host=localhost/g"  ms_reports/src/main/resources/log4j.properties
+	sed -i -e "s/\:\/\/postgres/\:\/\/localhost/g" ms_reports/src/main/resources/reports.properties
 	rm -f ms_reports/src/main/resources/*.properties-e
 	docker-compose build
 
