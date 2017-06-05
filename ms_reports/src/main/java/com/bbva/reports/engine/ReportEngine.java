@@ -75,6 +75,7 @@ public class ReportEngine {
                                 Map<String, Object> inputParam) {
 
         for (ReportSourceParam pm : params) {
+            if(pm.name() == null) continue;;
             if (!inputParam.containsKey(pm.name())) {
                 throw new IllegalArgumentException("El parametro '" + pm.name() + "' es requerido");
             }

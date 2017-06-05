@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen General</title>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding: 30px">
+        <img width="100" src="http://opcionis.com/blog/wp-content/uploads/2016/09/bbva-logo-e1456838226318-750x300.png" alt="">
+        <h1>Resumen</h1>
+
+        <h3>Datos del Cliente</h3>
+        {{#client}}
+        <table border="1" width="100%">
+            <tbody>
+                <tr>
+                    <td width="60dpi">Cliente </td>
+                    <td>{{code}} </td>
+                </tr>
+                <tr>
+                    <td>Nombres </td>
+                    <td>{{name}} </td>
+                </tr>
+                <tr>
+                    <td>Apellidos </td>
+                    <td>{{lastname}} </td>
+                </tr>
+                <tr>
+                    <td>Correo Electrónico </td>
+                    <td>{{email}} </td>
+                </tr>
+            </tbody>
+        </table>
+        {{/client}}
+
+        <h3>CTS</h3>
+        <p>
+            <b>Total CTS : </b> s/ 30000.00
+        </p>
+
+        <h3>Mis Tarjetas</h3>
+        <table border="1" style="width: 100%">
+            <thead>
+              <tr>
+                  <th><b>Numero de Tarjeta</b></th>
+                  <th><b>Monto Disponible</b></th>
+                  <th><b>Monto Usado</b></th>
+                  <th width="10%"><b>Tipo de Tarjeta</b></th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> xxxxx-0001 </td>
+                    <td>1200.00</td>
+                    <td>0.0</td>
+                     <td style="text-align: center">DEBITO</td>
+                </tr>
+                <tr>
+                    <td> xxxxx-0001 </td>
+                    <td>1200.00</td>
+                    <td>0.0</td>
+                     <td style="text-align: center">DEBITO</td>
+                </tr>
+                <tr>
+                    <td> xxxxx-0001 </td>
+                    <td>1200.00</td>
+                    <td>0.0</td>
+                    <td style="text-align: center">DEBITO</td>
+                </tr>
+                <tr>
+                    <td> xxxxx-0001 </td>
+                    <td>1200.00</td>
+                    <td>0.0</td>
+                    <td style="text-align: center">DEBITO</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

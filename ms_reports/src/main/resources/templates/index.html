@@ -41,7 +41,8 @@
             <div ng-if="reports.length == 0"> Obteniendos reportes</div>
             <ul ng-if="reports && reports.length > 0" class="list-group">
                 <a href="" ng-click="openReport($index)" ng-repeat="rep in reports"
-                   class="list-group-item track by $index" ng-bind="rep.name">
+                   class="list-group-item track by $index">
+                    <span ng-bind="rep.name"></span>
                     <div style="float:right">
                         <button ng-click="deleteReport(rep.name)" class="btn btn-xs btn-danger"><i
                                 class="icon icon-close">&times;</i></button>

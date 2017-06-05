@@ -37,7 +37,7 @@
             <ul ng-if="reports && reports.length > 0" class="list-group">
                 <a href="" ng-click="openReport($index)" ng-repeat="rep in reports"
                    class="list-group-item track by $index">
-                    {{rep.name}}
+                    <span ng-bind="rep.name"></span>
                     <div style="float:right">
                         <button ng-click="deleteReport(rep.name)" class="btn btn-xs btn-danger"><i
                                 class="icon icon-close">&times;</i></button>
@@ -62,7 +62,7 @@
 
 
 <script type="text/javascript">
-    const serverApi = "http://localhost:9091/reports";
+    const serverApi = "http://localhost:8000/reports";
     const notNulls = (key,value) => value === null? undefined : value;
 
     function FormController($scope, $http) {
