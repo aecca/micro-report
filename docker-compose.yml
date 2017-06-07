@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
 
   postgres:
@@ -21,7 +21,7 @@ services:
     build: ./ms_reports
     volumes:
       - ./ms_reports/target:/app
-      - ~/.reports:/root/.reports/
+      - ./data:/root/.reports/
     ports:
       - "8000:8000"
     links:
