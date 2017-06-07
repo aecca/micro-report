@@ -3,3 +3,5 @@
 bin
 target
 ms_reports/target
+node_modules
+docs/node_modules

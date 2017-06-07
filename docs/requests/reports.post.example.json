@@ -1,0 +1,14 @@
+{
+  "content": "<h1> {{demo.test}} </h1>",
+  "name": "report-demo",
+  "sources": [
+    {
+      "content": "{\"test\" : \"Andy Ecca\"}",
+      "name": "demo",
+      "params": [],
+      "type": "json",
+      "collection": false
+    }
+  ],
+  "type": "html"
+}

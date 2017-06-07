@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "content": {
+      "id": "/properties/content",
+      "type": "string"
+    },
+    "name": {
+      "id": "/properties/name",
+      "type": "string"
+    },
+    "sources": {
+      "id": "/properties/sources",
+      "items": {
+        "id": "/properties/sources/items",
+        "properties": {
+          "collection": {
+            "id": "/properties/sources/items/properties/collection",
+            "type": "boolean"
+          },
+          "content": {
+            "id": "/properties/sources/items/properties/content",
+            "type": "string"
+          },
+          "name": {
+            "id": "/properties/sources/items/properties/name",
+            "type": "string"
+          },
+          "params": {
+            "id": "/properties/sources/items/properties/params",
+            "items": {},
+            "type": "array"
+          },
+          "type": {
+            "id": "/properties/sources/items/properties/type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content",
+          "type",
+          "params",
+          "name",
+          "collection"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "type": {
+      "id": "/properties/type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "content",
+    "sources",
+    "type",
+    "name"
+  ],
+  "type": "object"
+}

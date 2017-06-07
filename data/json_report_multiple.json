@@ -1,1 +1,23 @@
-{"id":"5b89a102-65bb-4acc-9945-4b46afaed2c3","name":"json_report_multiple","content":"<h3>{{user.name}} </h3>\n<h4>{{user.lastname}} </h3>\n<h4>{{user.message}} </h3>","sources":[{"name":"user","content":"{\n  \"name\"  : \"Andy Ecca\",\n  \"lastname\": \"Bienvenido al sistema!\",\n  \"message\": \"la ultima vez que ingresaste fue ayer.\"\n}","type":"JSON","collection":false,"params":[{"name":null,"value":null,"required":false,"type":null}]}],"type":"HTML","createdAt":"2017-06-03 19:56:52"}
+{
+  "id": "5b89a102-65bb-4acc-9945-4b46afaed2c3",
+  "name": "json_report_multiple",
+  "content": "<h3>{{user.name}} </h3>\n<h4>{{user.lastname}} </h3>\n<h4>{{user.message}} </h3>",
+  "sources": [
+    {
+      "name": "user",
+      "content": "{\n  \"name\"  : \"Andy Ecca\",\n  \"lastname\": \"Bienvenido al sistema!\",\n  \"message\": \"la ultima vez que ingresaste fue ayer.\"\n}",
+      "type": "JSON",
+      "collection": false,
+      "params": [
+        {
+          "name": "codCliente",
+          "value": null,
+          "required": false,
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "type": "HTML",
+  "createdAt": "2017-06-03 19:56:52"
+}

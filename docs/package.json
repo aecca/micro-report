@@ -1,0 +1,33 @@
+{
+  "name": "raml-docs",
+  "version": "1.0.0",
+  "description": "RAML configuration for API REST ",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "html": "raml2html api.raml > index.html",
+    "run": "open index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "raml",
+    "express",
+    "osprey",
+    "node"
+  ],
+  "author": "aecca",
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "raml-mocker": "^0.2.0",
+    "raml2html": "^2.4.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "jscomplex": "^1.0.2"
+  }
+}

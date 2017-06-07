@@ -1,0 +1,30 @@
+#%RAML 0.8
+title: Reportify
+baseUri: http://localhost:8000/
+version: v1
+mediaType: application/json
+
+/reports:
+  get:
+    description: Obtiene la lista de todos los reportes disponibles
+    responses:
+        200:
+          body:
+            application/json:
+              example: !include ./responses/reports.lists.json
+
+
+  post:
+    description: Crear y/o actualizar reportes
+    body:
+      application/json:
+        schema:  !include ./requests/reports.post.request.json
+        example: !include ./requests/reports.post.example.json
+
+  /{reportName}:
+    delete:
+      description: Eliminar Reporte
+
+  /admin:
+    get:
+      description: Vista del administrador principal de reportes

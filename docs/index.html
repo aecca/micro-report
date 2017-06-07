@@ -1,0 +1,359 @@
+<!DOCTYPE HTML><html><head><title>Reportify API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 2.5.0"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Reportify API documentation <small>version v1</small></h1><p>http://localhost:8000/</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="reports" class="panel-title">/reports</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_reports"><span class="parent"></span>/reports</a> <span class="methods"><a href="#reports_get"><span class="badge badge_get">get</span></a> <a href="#reports_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_reports" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#reports_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtiene la lista de todos los reportes disponibles</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#reports_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Crear y/o actualizar reportes</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="reports_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/reports</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtiene la lista de todos los reportes disponibles</p></div><ul class="nav nav-tabs"><li class="active"><a href="#reports_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="reports_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "id": "f6211870-7e97-4f89-9bce-44e6821de51d",
+    "name": "birt_report",
+    "content": "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;report xmlns=\"http://www.eclipse.org/birt/2005/design\" version=\"3.2.23\" id=\"1\"&gt;\n    &lt;property name=\"createdBy\"&gt;Eclipse BIRT Designer Version 4.6.0.v201606072122&lt;/property&gt;\n    &lt;property name=\"units\"&gt;in&lt;/property&gt;\n    &lt;property name=\"iconFile\"&gt;/templates/blank_report.gif&lt;/property&gt;\n    &lt;property name=\"bidiLayoutOrientation\"&gt;ltr&lt;/property&gt;\n    &lt;property name=\"imageDPI\"&gt;72&lt;/property&gt;\n    &lt;page-setup&gt;\n        &lt;simple-master-page name=\"Simple MasterPage\" id=\"2\"&gt;\n            &lt;page-footer&gt;\n                &lt;text id=\"3\"&gt;\n                    &lt;property name=\"contentType\"&gt;html&lt;/property&gt;\n                    &lt;text-property name=\"content\"&gt;&lt;![CDATA[&lt;value-of&gt;new Date()&lt;/value-of&gt;]]&gt;&lt;/text-property&gt;\n                &lt;/text&gt;\n            &lt;/page-footer&gt;\n        &lt;/simple-master-page&gt;\n    &lt;/page-setup&gt;\n    &lt;body&gt;\n        &lt;text id=\"5\"&gt;\n            &lt;property name=\"fontSize\"&gt;xx-large&lt;/property&gt;\n            &lt;property name=\"fontWeight\"&gt;bold&lt;/property&gt;\n            &lt;property name=\"textAlign\"&gt;center&lt;/property&gt;\n            &lt;property name=\"contentType\"&gt;auto&lt;/property&gt;\n            &lt;text-property name=\"content\"&gt;&lt;![CDATA[Bienvenido al BBVA Reporter V0.1]]&gt;&lt;/text-property&gt;\n        &lt;/text&gt;\n        &lt;label id=\"6\"&gt;\n            &lt;property name=\"textAlign\"&gt;center&lt;/property&gt;\n            &lt;structure name=\"toc\"/&gt;\n            &lt;text-property name=\"text\"&gt;Esto es una prueba de reporte :-)&lt;/text-property&gt;\n        &lt;/label&gt;\n        &lt;image id=\"4\"&gt;\n            &lt;property name=\"marginLeft\"&gt;100pt&lt;/property&gt;\n            &lt;property name=\"display\"&gt;inline&lt;/property&gt;\n            &lt;property name=\"height\"&gt;1.25in&lt;/property&gt;\n            &lt;property name=\"width\"&gt;4.944444444444445in&lt;/property&gt;\n            &lt;structure name=\"toc\"/&gt;\n            &lt;property name=\"source\"&gt;url&lt;/property&gt;\n            &lt;expression name=\"uri\" type=\"constant\"&gt;https://www.bbvacontinental.pe/fbin/mult/logoperu_tcm1105-418187.png&lt;/expression&gt;\n        &lt;/image&gt;\n        &lt;text id=\"7\"&gt;\n            &lt;property name=\"fontSize\"&gt;12pt&lt;/property&gt;\n            &lt;property name=\"paddingTop\"&gt;20pt&lt;/property&gt;\n            &lt;property name=\"paddingLeft\"&gt;20pt&lt;/property&gt;\n            &lt;property name=\"paddingBottom\"&gt;20pt&lt;/property&gt;\n            &lt;property name=\"paddingRight\"&gt;20pt&lt;/property&gt;\n            &lt;property name=\"whiteSpace\"&gt;normal&lt;/property&gt;\n            &lt;property name=\"contentType\"&gt;auto&lt;/property&gt;\n            &lt;text-property name=\"content\"&gt;&lt;![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultricies est a finibus convallis. Morbi vulputate eu odio vel vehicula. Duis dignissim auctor ornare. Nulla facilisi. Mauris blandit, turpis vel malesuada rhoncus, urna ipsum aliquet arcu, vel egestas leo est eget elit. Integer at nisi eu risus faucibus maximus. Nullam sed dictum mi, vitae hendrerit enim. Aliquam metus ex, rutrum a malesuada ut, bibendum eget neque. Suspendisse at facilisis mi. Morbi vulputate consectetur justo, ut dignissim purus condimentum sed.\n\nIn pretium condimentum pulvinar. Curabitur tempus egestas justo, nec rutrum sem condimentum a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed fermentum enim odio, et commodo velit tempor ultricies. Ut nec lobortis magna. Curabitur elementum fringilla facilisis. Proin nec cursus tortor.\n\nSuspendisse vulputate dui non nulla tincidunt pharetra. Sed non felis hendrerit urna gravida consequat. Nunc vel tellus in neque aliquam varius. Aenean quis dictum dui. Vivamus tincidunt tincidunt turpis quis scelerisque. Curabitur a commodo lorem. Aliquam interdum dolor in purus pellentesque eleifend. Donec a mi ut lorem pellentesque interdum et in nisl.\n\nDonec et orci ut nulla pretium sagittis. Nulla facilisi. Nullam imperdiet gravida mauris et aliquam. Pellentesque laoreet scelerisque tellus vitae hendrerit. Nam nec elit condimentum, pulvinar risus sed, tincidunt ipsum. Vestibulum velit enim, ornare eget consequat a, sodales at lorem. Curabitur sit amet dolor hendrerit, luctus dui in, consequat lectus. In sed mi dictum velit consectetur sodales quis at sem. Nam eget elit diam. Morbi euismod mauris vitae eros pellentesque, nec venenatis nisi vulputate. Quisque aliquam et tortor sit amet commodo.\n\nVivamus hendrerit tortor a massa pellentesque, ut pulvinar risus rutrum. Pellentesque lacinia, quam condimentum suscipit iaculis, dui eros fermentum justo, nec porta metus metus eget augue. Donec vehicula consectetur tempor. Suspendisse potenti. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque venenatis sollicitudin augue sed feugiat. Vestibulum ultricies augue nibh, a condimentum lorem consequat eu. Fusce sollicitudin pulvinar turpis in fringilla. In sodales, arcu quis egestas blandit, ante felis suscipit metus, eget malesuada urna velit non elit. Donec quis dapibus dui, vel rhoncus libero.\n\n]]&gt;&lt;/text-property&gt;\n        &lt;/text&gt;\n    &lt;/body&gt;\n&lt;/report&gt;",
+    "sources": [],
+    "type": "XML",
+    "createdAt": 1496523931000
+  },
+  {
+    "id": "u1u11",
+    "name": "db_report",
+    "content": "{{#users}}\n\n &lt;li&gt; {{name}}  - {{email}} &lt;/li&gt;\n\n{{/users}}",
+    "sources": [
+      {
+        "name": "users",
+        "content": "SELECT * FROM tbl_client WHERE code=:codigoCliente",
+        "type": "SQL",
+        "collection": false,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496519069000
+  },
+  {
+    "id": "u1u11",
+    "name": "json_report",
+    "content": "&lt;h1&gt; Hola {{user.name}}, bienvenido al sistema &lt;/h1&gt;",
+    "sources": [
+      {
+        "name": "user",
+        "content": "{\"name\" : \"Juan Perez\"}",
+        "type": "JSON",
+        "collection": false,
+        "params": [
+          {
+            "name": null,
+            "value": null,
+            "required": false,
+            "type": null
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496519069000
+  },
+  {
+    "id": "5b89a102-65bb-4acc-9945-4b46afaed2c3",
+    "name": "json_report_multiple",
+    "content": "&lt;h3&gt;{{user.name}} &lt;/h3&gt;\n&lt;h4&gt;{{user.lastname}} &lt;/h3&gt;\n&lt;h4&gt;{{user.message}} &lt;/h3&gt;",
+    "sources": [
+      {
+        "name": "user",
+        "content": "{\n  \"name\"  : \"Andy Ecca\",\n  \"lastname\": \"Bienvenido al sistema!\",\n  \"message\": \"la ultima vez que ingresaste fue ayer.\"\n}",
+        "type": "JSON",
+        "collection": false,
+        "params": [
+          {
+            "name": null,
+            "value": null,
+            "required": false,
+            "type": null
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496537812000
+  },
+  {
+    "id": "8b8ea227-0b89-4079-8ed7-daf4ed24d29e",
+    "name": "resumen_cliente",
+    "content": "&lt;!DOCTYPE html&gt;\n&lt;html lang=\"en\"&gt;\n&lt;head&gt;\n    &lt;meta charset=\"UTF-8\"&gt;\n    &lt;title&gt;Resumen General&lt;/title&gt;\n    &lt;style type=\"text/css\"&gt;\n       body {\n          padding:100px;\n       }\n        table {\n            border-collapse: collapse;\n        }\n\n        table, th, td {\n            border: 10dpi solid yellow;\n        }\n    &lt;/style&gt;\n&lt;/head&gt;\n&lt;body&gt;\n    &lt;div style=\"padding: 30px\"&gt;\n        &lt;img width=\"100\" src=\"http://opcionis.com/blog/wp-content/uploads/2016/09/bbva-logo-e1456838226318-750x300.png\" alt=\"\"&gt;\n        &lt;h1&gt;Resumen Financiero &lt;/h1&gt;\n\n        &lt;h3&gt;Datos del Cliente&lt;/h3&gt;\n        {{#client}}\n        &lt;table border=\"1\" width=\"100%\"&gt;\n            &lt;tbody&gt;\n                &lt;tr&gt;\n                    &lt;td width=\"60dpi\"&gt;Cliente &lt;/td&gt;\n                    &lt;td&gt;{{code}} &lt;/td&gt;\n                &lt;/tr&gt;\n                &lt;tr&gt;\n                    &lt;td&gt;Nombres &lt;/td&gt;\n                    &lt;td&gt;{{name}} &lt;/td&gt;\n                &lt;/tr&gt;\n                &lt;tr&gt;\n                    &lt;td&gt;Apellidos &lt;/td&gt;\n                    &lt;td&gt;{{lastname}} &lt;/td&gt;\n                &lt;/tr&gt;\n                &lt;tr&gt;\n                    &lt;td&gt;Correo Electrónico &lt;/td&gt;\n                    &lt;td&gt;{{email}} &lt;/td&gt;\n                &lt;/tr&gt;\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n        {{/client}}\n\n        &lt;h3&gt;CTS&lt;/h3&gt;\n        &lt;p&gt;\n            &lt;b&gt;Total CTS : &lt;/b&gt; s/ {{cts.ammount}}\n        &lt;/p&gt;\n\n        &lt;h3&gt;Mis Tarjetas&lt;/h3&gt;\n        &lt;table border=\"1\" style=\"width: 100%\"&gt;\n            &lt;thead&gt;\n              &lt;tr&gt;\n                  &lt;th&gt;&lt;b&gt;Numero de Tarjeta&lt;/b&gt;&lt;/th&gt;\n                  &lt;th&gt;&lt;b&gt;Monto Disponible&lt;/b&gt;&lt;/th&gt;\n                  &lt;th&gt;&lt;b&gt;Monto Usado&lt;/b&gt;&lt;/th&gt;\n                  &lt;th width=\"10%\"&gt;&lt;b&gt;Tipo de Tarjeta&lt;/b&gt;&lt;/th&gt;\n              &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n               {{#cards}}\n                &lt;tr&gt;\n                    &lt;td&gt; {{number}} &lt;/td&gt;\n                    &lt;td&gt;{{balance_available}} &lt;/td&gt;\n                    &lt;td&gt;{{balance_user }} &lt;/td&gt;\n                     &lt;td style=\"text-align: center\"&gt;{{type}} &lt;/td&gt;\n                &lt;/tr&gt;\n               {{/cards}}\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    &lt;/div&gt;\n&lt;/body&gt;\n&lt;/html&gt;",
+    "sources": [
+      {
+        "name": "client",
+        "content": "SELECT * FROM tbl_client where code =:codigoCliente;",
+        "type": "SQL",
+        "collection": false,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "cts",
+        "content": "SELECT\n  cts.ammount\nFROM  tbl_account account\nINNER JOIN tbl_account_cts cts ON (cts.account_id = account.id)\nINNER JOIN tbl_client client ON (client.id = account.client_id)\nWHERE account.type = &#39;CTS&#39; AND client.code = :codigoCliente;",
+        "type": "SQL",
+        "collection": false,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "cards",
+        "content": "SELECT\n  card.number,\n  card.balance_available,\n  card.balance_used,\n  card.type\nFROM tbl_account_card card\nINNER JOIN tbl_account account ON (card.account_id = account.id)\nINNER JOIN tbl_client client ON (client.id = account.client_id)\nWHERE client.code = :codigoCliente AND card.active = true;",
+        "type": "SQL",
+        "collection": true,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496644258000
+  }
+]</code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="reports_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/reports</h4></div><div class="modal-body"><div class="alert alert-info"><p>Crear y/o actualizar reportes</p></div><ul class="nav nav-tabs"><li class="active"><a href="#reports_post_request" data-toggle="tab">Request</a></li></ul><div class="tab-content"><div class="tab-pane active" id="reports_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Schema</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "content": {
+      "id": "/properties/content",
+      "type": "string"
+    },
+    "name": {
+      "id": "/properties/name",
+      "type": "string"
+    },
+    "sources": {
+      "id": "/properties/sources",
+      "items": {
+        "id": "/properties/sources/items",
+        "properties": {
+          "collection": {
+            "id": "/properties/sources/items/properties/collection",
+            "type": "boolean"
+          },
+          "content": {
+            "id": "/properties/sources/items/properties/content",
+            "type": "string"
+          },
+          "name": {
+            "id": "/properties/sources/items/properties/name",
+            "type": "string"
+          },
+          "params": {
+            "id": "/properties/sources/items/properties/params",
+            "items": {},
+            "type": "array"
+          },
+          "type": {
+            "id": "/properties/sources/items/properties/type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content",
+          "type",
+          "params",
+          "name",
+          "collection"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "type": {
+      "id": "/properties/type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "content",
+    "sources",
+    "type",
+    "name"
+  ],
+  "type": "object"
+}</code></pre><p><strong>Example</strong>:</p><pre><code>{
+  "content": "&lt;h1&gt; {{demo.test}} &lt;/h1&gt;",
+  "name": "report-demo",
+  "sources": [
+    {
+      "content": "{\"test\" : \"Andy Ecca\"}",
+      "name": "demo",
+      "params": [],
+      "type": "json",
+      "collection": false
+    }
+  ],
+  "type": "html"
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_reports__reportName_"><span class="parent">/reports</span>/{reportName}</a> <span class="methods"><a href="#reports__reportName__delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_reports__reportName_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#reports__reportName__delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"><p>Eliminar Reporte</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="reports__reportName__delete"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span class="parent">/reports</span>/{reportName}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Eliminar Reporte</p></div><ul class="nav nav-tabs"><li class="active"><a href="#reports__reportName__delete_request" data-toggle="tab">Request</a></li></ul><div class="tab-content"><div class="tab-pane active" id="reports__reportName__delete_request"><h3>URI Parameters</h3><ul><li><strong>reportName</strong>: <em>required (string)</em></li></ul></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_reports_admin"><span class="parent">/reports</span>/admin</a> <span class="methods"><a href="#reports_admin_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_reports_admin" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#reports_admin_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Vista del administrador principal de reportes</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="reports_admin_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/reports</span>/admin</h4></div><div class="modal-body"><div class="alert alert-info"><p>Vista del administrador principal de reportes</p></div><ul class="nav nav-tabs"></ul><div class="tab-content"></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#reports">/reports</a></li></ul></div></div></div></div></body></html>

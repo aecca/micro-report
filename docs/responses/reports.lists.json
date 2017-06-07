@@ -1,0 +1,130 @@
+[
+  {
+    "id": "f6211870-7e97-4f89-9bce-44e6821de51d",
+    "name": "birt_report",
+    "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<report xmlns=\"http://www.eclipse.org/birt/2005/design\" version=\"3.2.23\" id=\"1\">\n    <property name=\"createdBy\">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>\n    <property name=\"units\">in</property>\n    <property name=\"iconFile\">/templates/blank_report.gif</property>\n    <property name=\"bidiLayoutOrientation\">ltr</property>\n    <property name=\"imageDPI\">72</property>\n    <page-setup>\n        <simple-master-page name=\"Simple MasterPage\" id=\"2\">\n            <page-footer>\n                <text id=\"3\">\n                    <property name=\"contentType\">html</property>\n                    <text-property name=\"content\"><![CDATA[<value-of>new Date()</value-of>]]></text-property>\n                </text>\n            </page-footer>\n        </simple-master-page>\n    </page-setup>\n    <body>\n        <text id=\"5\">\n            <property name=\"fontSize\">xx-large</property>\n            <property name=\"fontWeight\">bold</property>\n            <property name=\"textAlign\">center</property>\n            <property name=\"contentType\">auto</property>\n            <text-property name=\"content\"><![CDATA[Bienvenido al BBVA Reporter V0.1]]></text-property>\n        </text>\n        <label id=\"6\">\n            <property name=\"textAlign\">center</property>\n            <structure name=\"toc\"/>\n            <text-property name=\"text\">Esto es una prueba de reporte :-)</text-property>\n        </label>\n        <image id=\"4\">\n            <property name=\"marginLeft\">100pt</property>\n            <property name=\"display\">inline</property>\n            <property name=\"height\">1.25in</property>\n            <property name=\"width\">4.944444444444445in</property>\n            <structure name=\"toc\"/>\n            <property name=\"source\">url</property>\n            <expression name=\"uri\" type=\"constant\">https://www.bbvacontinental.pe/fbin/mult/logoperu_tcm1105-418187.png</expression>\n        </image>\n        <text id=\"7\">\n            <property name=\"fontSize\">12pt</property>\n            <property name=\"paddingTop\">20pt</property>\n            <property name=\"paddingLeft\">20pt</property>\n            <property name=\"paddingBottom\">20pt</property>\n            <property name=\"paddingRight\">20pt</property>\n            <property name=\"whiteSpace\">normal</property>\n            <property name=\"contentType\">auto</property>\n            <text-property name=\"content\"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultricies est a finibus convallis. Morbi vulputate eu odio vel vehicula. Duis dignissim auctor ornare. Nulla facilisi. Mauris blandit, turpis vel malesuada rhoncus, urna ipsum aliquet arcu, vel egestas leo est eget elit. Integer at nisi eu risus faucibus maximus. Nullam sed dictum mi, vitae hendrerit enim. Aliquam metus ex, rutrum a malesuada ut, bibendum eget neque. Suspendisse at facilisis mi. Morbi vulputate consectetur justo, ut dignissim purus condimentum sed.\n\nIn pretium condimentum pulvinar. Curabitur tempus egestas justo, nec rutrum sem condimentum a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed fermentum enim odio, et commodo velit tempor ultricies. Ut nec lobortis magna. Curabitur elementum fringilla facilisis. Proin nec cursus tortor.\n\nSuspendisse vulputate dui non nulla tincidunt pharetra. Sed non felis hendrerit urna gravida consequat. Nunc vel tellus in neque aliquam varius. Aenean quis dictum dui. Vivamus tincidunt tincidunt turpis quis scelerisque. Curabitur a commodo lorem. Aliquam interdum dolor in purus pellentesque eleifend. Donec a mi ut lorem pellentesque interdum et in nisl.\n\nDonec et orci ut nulla pretium sagittis. Nulla facilisi. Nullam imperdiet gravida mauris et aliquam. Pellentesque laoreet scelerisque tellus vitae hendrerit. Nam nec elit condimentum, pulvinar risus sed, tincidunt ipsum. Vestibulum velit enim, ornare eget consequat a, sodales at lorem. Curabitur sit amet dolor hendrerit, luctus dui in, consequat lectus. In sed mi dictum velit consectetur sodales quis at sem. Nam eget elit diam. Morbi euismod mauris vitae eros pellentesque, nec venenatis nisi vulputate. Quisque aliquam et tortor sit amet commodo.\n\nVivamus hendrerit tortor a massa pellentesque, ut pulvinar risus rutrum. Pellentesque lacinia, quam condimentum suscipit iaculis, dui eros fermentum justo, nec porta metus metus eget augue. Donec vehicula consectetur tempor. Suspendisse potenti. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque venenatis sollicitudin augue sed feugiat. Vestibulum ultricies augue nibh, a condimentum lorem consequat eu. Fusce sollicitudin pulvinar turpis in fringilla. In sodales, arcu quis egestas blandit, ante felis suscipit metus, eget malesuada urna velit non elit. Donec quis dapibus dui, vel rhoncus libero.\n\n]]></text-property>\n        </text>\n    </body>\n</report>",
+    "sources": [],
+    "type": "XML",
+    "createdAt": 1496523931000
+  },
+  {
+    "id": "u1u11",
+    "name": "db_report",
+    "content": "{{#users}}\n\n <li> {{name}}  - {{email}} </li>\n\n{{/users}}",
+    "sources": [
+      {
+        "name": "users",
+        "content": "SELECT * FROM tbl_client WHERE code=:codigoCliente",
+        "type": "SQL",
+        "collection": false,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496519069000
+  },
+  {
+    "id": "u1u11",
+    "name": "json_report",
+    "content": "<h1> Hola {{user.name}}, bienvenido al sistema </h1>",
+    "sources": [
+      {
+        "name": "user",
+        "content": "{\"name\" : \"Juan Perez\"}",
+        "type": "JSON",
+        "collection": false,
+        "params": [
+          {
+            "name": null,
+            "value": null,
+            "required": false,
+            "type": null
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496519069000
+  },
+  {
+    "id": "5b89a102-65bb-4acc-9945-4b46afaed2c3",
+    "name": "json_report_multiple",
+    "content": "<h3>{{user.name}} </h3>\n<h4>{{user.lastname}} </h3>\n<h4>{{user.message}} </h3>",
+    "sources": [
+      {
+        "name": "user",
+        "content": "{\n  \"name\"  : \"Andy Ecca\",\n  \"lastname\": \"Bienvenido al sistema!\",\n  \"message\": \"la ultima vez que ingresaste fue ayer.\"\n}",
+        "type": "JSON",
+        "collection": false,
+        "params": [
+          {
+            "name": null,
+            "value": null,
+            "required": false,
+            "type": null
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496537812000
+  },
+  {
+    "id": "8b8ea227-0b89-4079-8ed7-daf4ed24d29e",
+    "name": "resumen_cliente",
+    "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Resumen General</title>\n    <style type=\"text/css\">\n       body {\n          padding:100px;\n       }\n        table {\n            border-collapse: collapse;\n        }\n\n        table, th, td {\n            border: 10dpi solid yellow;\n        }\n    </style>\n</head>\n<body>\n    <div style=\"padding: 30px\">\n        <img width=\"100\" src=\"http://opcionis.com/blog/wp-content/uploads/2016/09/bbva-logo-e1456838226318-750x300.png\" alt=\"\">\n        <h1>Resumen Financiero </h1>\n\n        <h3>Datos del Cliente</h3>\n        {{#client}}\n        <table border=\"1\" width=\"100%\">\n            <tbody>\n                <tr>\n                    <td width=\"60dpi\">Cliente </td>\n                    <td>{{code}} </td>\n                </tr>\n                <tr>\n                    <td>Nombres </td>\n                    <td>{{name}} </td>\n                </tr>\n                <tr>\n                    <td>Apellidos </td>\n                    <td>{{lastname}} </td>\n                </tr>\n                <tr>\n                    <td>Correo Electrónico </td>\n                    <td>{{email}} </td>\n                </tr>\n            </tbody>\n        </table>\n        {{/client}}\n\n        <h3>CTS</h3>\n        <p>\n            <b>Total CTS : </b> s/ {{cts.ammount}}\n        </p>\n\n        <h3>Mis Tarjetas</h3>\n        <table border=\"1\" style=\"width: 100%\">\n            <thead>\n              <tr>\n                  <th><b>Numero de Tarjeta</b></th>\n                  <th><b>Monto Disponible</b></th>\n                  <th><b>Monto Usado</b></th>\n                  <th width=\"10%\"><b>Tipo de Tarjeta</b></th>\n              </tr>\n            </thead>\n            <tbody>\n               {{#cards}}\n                <tr>\n                    <td> {{number}} </td>\n                    <td>{{balance_available}} </td>\n                    <td>{{balance_user }} </td>\n                     <td style=\"text-align: center\">{{type}} </td>\n                </tr>\n               {{/cards}}\n            </tbody>\n        </table>\n    </div>\n</body>\n</html>",
+    "sources": [
+      {
+        "name": "client",
+        "content": "SELECT * FROM tbl_client where code =:codigoCliente;",
+        "type": "SQL",
+        "collection": false,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "cts",
+        "content": "SELECT\n  cts.ammount\nFROM  tbl_account account\nINNER JOIN tbl_account_cts cts ON (cts.account_id = account.id)\nINNER JOIN tbl_client client ON (client.id = account.client_id)\nWHERE account.type = 'CTS' AND client.code = :codigoCliente;",
+        "type": "SQL",
+        "collection": false,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "cards",
+        "content": "SELECT\n  card.number,\n  card.balance_available,\n  card.balance_used,\n  card.type\nFROM tbl_account_card card\nINNER JOIN tbl_account account ON (card.account_id = account.id)\nINNER JOIN tbl_client client ON (client.id = account.client_id)\nWHERE client.code = :codigoCliente AND card.active = true;",
+        "type": "SQL",
+        "collection": true,
+        "params": [
+          {
+            "name": "codigoCliente",
+            "value": null,
+            "required": false,
+            "type": "STRING"
+          }
+        ]
+      }
+    ],
+    "type": "HTML",
+    "createdAt": 1496644258000
+  }
+]
