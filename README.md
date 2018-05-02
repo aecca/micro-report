@@ -1,8 +1,9 @@
-# micro-report
-Reto BBVA - Generador de documentos/reportes on the fly. 
+# micro-report 
+Generador de documentos/reportes on the fly. 
 
 ## Install Dependencies
-```make install
+```
+make install
 make build
 ```
 
@@ -16,7 +17,7 @@ make up
 make down
 ```
 
-```
 ## Help 
+```
 make
 ```
